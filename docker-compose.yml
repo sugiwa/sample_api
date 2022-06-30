@@ -12,6 +12,8 @@ services:
     volumes:
       - ./api:/go/src/app
     tty: true
+    depends_on:
+      - postgres_db
 
   postgres_db:
     image: postgres:14
@@ -24,8 +26,8 @@ services:
       - ./db/initdb:/docker-entrypoint-initdb.d
       - ./db/config/postgresql.conf:/etc/postgresql/postgresql.conf
     environment:
-      - POSTGRES_USER='hoge'
-      - POSTGRES_PASSWORD='root'
-      - POSTGRES_DB='db'
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
 volumes:
   db-store:

@@ -1,8 +1,8 @@
 FROM golang:1.18-alpine
 
-WORKDIR /go/src/app
+RUN apk add --update && apk add git
 
-# COPY go.mod ./go/src/app/
+WORKDIR /go/src/app
 
 CMD [ "go", "run", "main.go" ]
 
