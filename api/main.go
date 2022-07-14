@@ -13,17 +13,33 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
 
-	users, err := controller.GetUsers()
+	switch r.Method {
+	case "GET":
+		req, _ := controller.GetUsers()
+		fmt.Println(req)
+		if err := enc.Encode(req); err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println(buf.String())
 
-	if err := enc.Encode(users); err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println(buf.String())
+		_, err := fmt.Fprint(w, buf.String())
+		if err != nil {
+			return
+		}
+	case "POST":
+		req, _ := controller.InsertUser(w, r)
+		fmt.Println(req)
+		if err := enc.Encode(req); err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println(buf.String())
 
-	_, err = fmt.Fprint(w, buf.String())
-	if err != nil {
-		return
+		_, err := fmt.Fprint(w, buf.String())
+		if err != nil {
+			return
+		}
 	}
+
 }
 
 func main() {
