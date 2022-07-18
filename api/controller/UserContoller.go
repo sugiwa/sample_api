@@ -79,8 +79,10 @@ func InsertUser(w http.ResponseWriter, r *http.Request) (req model.User, err err
 	err = dec.Decode(&req)
 
 	res, err := DB.Exec(`INSERT INTO users (name, email, password) VALUES ($1, $2, $3)`, req.Name, req.Email, req.Password)
+	fmt.Println("request fin")
 	if err != nil {
-		log.Fatal(err)
+		w.WriteHeader(400)
+		log.Println(err)
 	}
 
 	fmt.Println(res)

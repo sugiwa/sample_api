@@ -41,6 +41,10 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			return
 		}
+	case http.MethodPut:
+		w.WriteHeader(404)
+	case http.MethodDelete:
+		w.WriteHeader(404)
 	}
 
 }
@@ -71,6 +75,10 @@ func handler2(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			return
 		}
+	case http.MethodPost:
+		w.WriteHeader(404)
+	case http.MethodPut:
+		w.WriteHeader(404)
 	case http.MethodDelete:
 		req, _ := controller.DeleteUser(id, r)
 		fmt.Println(req)
