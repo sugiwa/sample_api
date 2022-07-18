@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	_ "github.com/lib/pq"
@@ -16,7 +17,11 @@ var DB *sql.DB
 
 func init() {
 	var err error
-	DB, err = sql.Open("postgres", "host=postgres user=hoge dbname=db password=root sslmode=disable")
+	user := os.Getenv("POSTGRES_USER")
+	db := os.Getenv("POSTGRES_DB")
+	password := os.Getenv("POSTGRES_PASSWORD")
+	config := fmt.Sprintf("host=postgres user=%s dbname=%s password=%s sslmode=disable", user, db, password)
+	DB, err = sql.Open("postgres", config)
 	if err != nil {
 		panic(err)
 	}

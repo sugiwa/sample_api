@@ -17,7 +17,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	enc := json.NewEncoder(&buf)
 
 	switch r.Method {
-	case "GET":
+	case http.MethodGet:
 		req, _ := controller.GetUsers()
 		fmt.Println(req)
 		if err := enc.Encode(req); err != nil {
@@ -29,7 +29,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			return
 		}
-	case "POST":
+	case http.MethodPost:
 		req, _ := controller.InsertUser(w, r)
 		fmt.Println(req)
 		if err := enc.Encode(req); err != nil {
@@ -60,7 +60,7 @@ func handler2(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(param)
 
 	switch r.Method {
-	case "GET":
+	case http.MethodGet:
 		req, _ := controller.GetUser(id, r)
 		fmt.Println(req)
 		if err := enc.Encode(req); err != nil {
@@ -71,7 +71,7 @@ func handler2(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			return
 		}
-	case "DELETE":
+	case http.MethodDelete:
 		req, _ := controller.DeleteUser(id, r)
 		fmt.Println(req)
 		if err := enc.Encode(req); err != nil {

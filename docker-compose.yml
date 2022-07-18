@@ -14,6 +14,10 @@ services:
     tty: true
     depends_on:
       - postgres_db
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
 
   postgres_db:
     image: postgres:14
