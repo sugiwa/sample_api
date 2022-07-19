@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"path/filepath"
+	"regexp"
 	"strconv"
 	"strings"
 )
@@ -49,10 +49,14 @@ func handler2(w http.ResponseWriter, r *http.Request) {
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
 
-	sub := strings.TrimPrefix(r.URL.Path, "/users")
-	_, param := filepath.Split(sub)
+	sub := strings.Trim(r.URL.Path, "/")
+	params := strings.Split(sub, "/")
 
-	id, _ := strconv.Atoi(param)
+	if !isNumber(params[1]) {
+		return
+	}
+
+	id, _ := strconv.Atoi(params[1])
 
 	switch r.Method {
 	case http.MethodGet:
@@ -81,6 +85,11 @@ func handler2(w http.ResponseWriter, r *http.Request) {
 		}
 
 	}
+}
+
+func isNumber(str string) bool {
+	reg := `^[0-9]\d*$`
+	return regexp.MustCompile(reg).Match([]byte(str))
 }
 
 func main() {
