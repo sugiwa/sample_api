@@ -2,6 +2,7 @@ package main
 
 import (
 	"api/controller"
+	"api/router"
 	"bytes"
 	"encoding/json"
 	"fmt"
@@ -53,6 +54,7 @@ func handler2(w http.ResponseWriter, r *http.Request) {
 	params := strings.Split(sub, "/")
 
 	if !isNumber(params[1]) {
+		router.HandleRequest(w, r, params[1])
 		return
 	}
 
