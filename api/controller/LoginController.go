@@ -31,7 +31,6 @@ func Login(w http.ResponseWriter, r *http.Request) (err error) {
 			MaxAge: 60,
 		}
 
-
 		http.SetCookie(w, cookie)
 
 	} else {
