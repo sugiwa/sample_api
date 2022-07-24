@@ -26,6 +26,13 @@ func Login(w http.ResponseWriter, r *http.Request) (err error) {
 		fmt.Println("login success")
 		sessionID := createSessionID()
 		fmt.Println(sessionID)
+		cookie := &http.Cookie{
+			Name: "cookie_test",
+			Value: sessionID,
+			MaxAge: 60,
+		}
+
+		http.SetCookie(w, cookie)
 
 	} else {
 		fmt.Println("login failed")
