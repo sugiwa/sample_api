@@ -25,7 +25,6 @@ func Login(w http.ResponseWriter, r *http.Request) (err error) {
 	if requestUser.Password == user.Password {
 		fmt.Println("login success")
 		sessionID := createSessionID()
-		fmt.Println(sessionID)
 		cookie := &http.Cookie{
 			Name: "session_id",
 			Value: sessionID,
