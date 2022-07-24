@@ -32,6 +32,12 @@ func Login(w http.ResponseWriter, r *http.Request) (err error) {
 			MaxAge: 60,
 		}
 
+		_, err := DB.Exec(`INSERT INTO session_ids (user_id, session_id) VALUES ($1, $2)`, user.Id, sessionID)
+		if err != nil {
+			log.Println("error", err)
+			return err
+		}
+
 		http.SetCookie(w, cookie)
 
 	} else {
